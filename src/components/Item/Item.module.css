@@ -1,0 +1,63 @@
+.item {
+    background: #ffffff;
+    box-shadow: 0px 20px 35px rgba(23, 20, 57, 0.04);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+
+    padding: 11px 8px 8px 8px;
+    cursor: pointer;
+}
+
+.image {
+    align-self: center;
+}
+
+.name {
+    font-family: "Raleway";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    letter-spacing: -0.24px;
+
+    /* Secondary */
+
+    color: #1b153d;
+}
+
+.brand {
+    /* Text Small */
+
+    font-family: "Raleway";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    /* identical to box height, or 117% */
+
+    letter-spacing: -0.24px;
+
+    color: #9095a6;
+    align-self: flex-start;
+}
+
+.price {
+    /* Text Price1 */
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height, or 119% */
+
+    letter-spacing: -0.24px;
+
+    /* Primary */
+
+    color: #17a030;
+    align-self: flex-start;
+}

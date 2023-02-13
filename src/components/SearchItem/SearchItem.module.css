@@ -1,0 +1,22 @@
+.searchItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text {
+    cursor: pointer;
+    width: 100%;
+}
+
+.text:hover {
+    color: gray;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.icon:hover {
+    fill: gray;
+}

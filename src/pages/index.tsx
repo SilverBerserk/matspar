@@ -14,14 +14,13 @@ import { useRouter } from 'next/router'
 
 export default function Home() {
   const [search, setSearch] = useState('')
-  const [suggestions, setSuggestions] = useState({ suggestions: [] })
+  const [suggestions, setSuggestions] = useState<{ suggestions: { text: string }[] }>({ suggestions: [] })
   const router = useRouter()
 
 
   const getSugestions = () => {
     let headersList = {
       "Accept": "*/*",
-      "User-Agent": "Thunder Client (https://www.thunderclient.com)"
     }
 
     let reqOptions = {
@@ -36,6 +35,10 @@ export default function Home() {
   }
 
   const handleSearch = (query: string) => {
+    const local = JSON.parse(window.localStorage.getItem('searched-items') ?? '[]')
+    if (!local.includes(query)) {
+      window.localStorage.setItem('searched-items', local.push(query))
+    }
     router.push(`kategori?q=${query}`)
   }
 
@@ -57,7 +60,7 @@ export default function Home() {
         <header className={styles.header}>
           <Search search={search} setSearch={setSearch} handleSearch={getSugestions} />
         </header>
-        {search ?
+        {suggestions.suggestions.length && search ?
           <SearchSuggestions suggestions={suggestions.suggestions} handleSearch={handleSearch} />
           : <RecentSearches handleSearch={handleSearch} />}
       </main>

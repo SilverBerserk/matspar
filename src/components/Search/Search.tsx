@@ -29,7 +29,7 @@ const Search = ({ search, setSearch, handleSearch }: searchProps) => {
                 onClick={() => handleSearch(search)}
                 src="/Search.svg"
                 alt="Search"
-                className={styles.vercelLogo}
+                className={styles.searchIcon}
                 width={24}
                 height={24}
                 priority />

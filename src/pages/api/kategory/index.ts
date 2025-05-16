@@ -10,23 +10,17 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<ResponseData>
 ) {
-    let headersList = {
-        "Accept": "*/*",
-        "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-        "Content-Type": "application/json"
-    }
 
-    let reqOptions = {
-        url: "https://www.matspar.se/kategori?q=coca%20cola%20zero",
+    const {q} = req.query
+
+    const reqOptions = {
+        url: `https://www.matspar.se/kategori?q=${q}`,
         method: "GET",
-        headers: headersList,
     }
 
     axios.request(reqOptions)
         .then(function (response) {
             console.log(response.data)
             res.status(200).json({ data:response.data })
-            // setBody(response.data);
-            // setLoading(false)
         })
 }

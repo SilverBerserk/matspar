@@ -1,5 +1,7 @@
-import Image from "next/image"
 import { KeyboardEvent } from "react"
+
+import Image from "next/image"
+
 import styles from './SearchItem.module.css'
 
 interface SearchItemProps {
@@ -30,7 +32,7 @@ const SearchItem = ({ text, icon, textAction, iconAction }: SearchItemProps) => 
             <span tabIndex={0} onKeyDown={e => handleIconKey(e, text)}>
                 <Image className={styles.icon}
                     alt={icon.alt} src={icon.src}
-                    width={15} height={15}
+                    width={20} height={20}
                     onClick={() => iconAction(text)} />
             </span>
         </div>

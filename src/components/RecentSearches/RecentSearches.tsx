@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
 import SearchItem from '../SearchItem/SearchItem'
+
 import styles from './RecentSearches.module.css'
 
 interface RecentSearchesProps {
@@ -7,12 +9,7 @@ interface RecentSearchesProps {
 }
 
 const RecentSearches = ({ handleSearch }: RecentSearchesProps) => {
-
-    useEffect(() => {
-        setSearches(JSON.parse(window.localStorage.getItem('searched-items') ?? '[]'))
-    }, [])
-
-    const [searches, setSearches] = useState<string[]>()
+    const [searches, setSearches] = useState<string[]>(JSON.parse(window.localStorage.getItem('searched-items') ?? '[]'))
 
 
     const removeStore = (item: string) => {

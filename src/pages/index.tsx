@@ -1,48 +1,40 @@
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
+
 import Search from '@/components/Search/Search'
+import RecentSearches from '@/components/RecentSearches/RecentSearches'
+import SearchSuggestions from '@/components/SearchSuggestions/SearchSuggestions'
 
 import styles from '@/styles/Home.module.css'
-import { useState } from 'react'
-import RecentSearches from '@/components/RecentSearches/RecentSearches'
-import axios from 'axios'
-import SearchSuggestions from '@/components/SearchSuggestions/SearchSuggestions'
-import { useRouter } from 'next/router'
-
-// const inter = Inter({ subsets: ['latin'] })
-
 
 
 export default function Home() {
   const [search, setSearch] = useState('')
-  const [suggestions, setSuggestions] = useState<{ suggestions: { text: string }[] }>({ suggestions: [] })
+  const [suggestions, setSuggestions] = useState<{ text: string }[]>([])
   const router = useRouter()
 
 
-  const getSugestions = () => {
-    let headersList = {
-      "Accept": "*/*",
-    }
+  useEffect(() => {
+    getSugestions()
+  }, [search])
 
-    let reqOptions = {
-      url: "https://api.matspar.se/autocomplete?query=cola",
-      method: "GET",
-      headers: headersList,
-    }
-
-    axios.request(reqOptions).then(function (response) {
-      setSuggestions(response.data);
-    })
+  const getSugestions = async () => {
+    const res = await fetch(`/api/sugestions?query=${search}`);
+    const result = await res.json();
+    console.log({ result })
+    setSuggestions(result.data.suggestions)
   }
 
   const handleSearch = (query: string) => {
-    const local = JSON.parse(window.localStorage.getItem('searched-items') ?? '[]')
+    const local:string[] = JSON.parse(window.localStorage.getItem('searched-items') ?? '[]')
+
     if (!local.includes(query)) {
-      window.localStorage.setItem('searched-items', local.push(query))
+      local.push(query)
+      window.localStorage.setItem('searched-items', JSON.stringify(local) )
     }
     router.push(`kategori?q=${query}`)
   }
-
-
 
 
   return (
@@ -58,10 +50,10 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <header className={styles.header}>
-          <Search search={search} setSearch={setSearch} handleSearch={getSugestions} />
+          <Search search={search} setSearch={setSearch} handleSearch={handleSearch} />
         </header>
-        {suggestions.suggestions.length && search ?
-          <SearchSuggestions suggestions={suggestions.suggestions} handleSearch={handleSearch} />
+        {suggestions?.length && search ?
+          <SearchSuggestions suggestions={suggestions} handleSearch={handleSearch} />
           : <RecentSearches handleSearch={handleSearch} />}
       </main>
     </>
